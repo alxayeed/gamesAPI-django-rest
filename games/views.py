@@ -43,7 +43,8 @@ def game_details(request, pk):
     try:
         game = Games.objects.get(pk=pk)
     except Games.DoesNotExist:
-        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+        # return JSONResponse(status=status.HTTP_204_NO_CONTENT)
+        return HttpResponse(status.HTTP_204_NO_CONTENT)
 
     if request.method == 'GET':
         game_serializer = GameSerializer(game)
@@ -56,7 +57,7 @@ def game_details(request, pk):
         if game_serializer.is_valid():
             game_serializer.save()
             return JSONResponse(game_serializer.data)
-        return JSONResponse(status=status.HTTP_400_BAD_REQUEST)
+        return JSONResponse(game_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     if request.method == 'DELETE':
         game.delete()

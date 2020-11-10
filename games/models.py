@@ -5,7 +5,7 @@ class GameCatagory(models.Model):
     name = models.CharField(max_length=200)
 
     class Meta:
-        ordering = ('name')
+        ordering = ('name',)
 
     def __str__(self, name):
         return self.name
